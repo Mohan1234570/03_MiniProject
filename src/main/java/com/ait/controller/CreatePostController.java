@@ -84,18 +84,23 @@ public class CreatePostController {
 		
         return "retrievingposts";
 	}
-	
-	
-	
+
+
+
 	@GetMapping("/retrieveComments")
-	public String retrieveComments(CommentForm form,Model model) {
-		
+	public String retrieveComments(CommentForm form, Model model) {
+
+		if (form.getCommentId() == null) {
+			model.addAttribute("error", "Post ID is required to retrieve comments.");
+			return "retrievecomments"; // or some error page
+		}
+
 		List<Comments> comments = blogService.getComments(form);
-		
 		model.addAttribute("comments", comments);
 		return "retrievecomments";
 	}
-	
-	
-	
+
+
+
+
 }
